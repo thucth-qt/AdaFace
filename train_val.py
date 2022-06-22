@@ -17,12 +17,12 @@ class Trainer(LightningModule):
         super(Trainer, self).__init__()
         self.save_hyperparameters()  # sets self.hparams
 
-        if self.hparams.train_data_path == 'faces_emore/imgs':
+        if 'faces_emore/imgs' in self.hparams.train_data_path  :
             class_num = 70722 if self.hparams.train_data_subset else 85742
-        elif self.hparams.train_data_path == 'ms1m-retinaface-t1/imgs':
+        elif 'ms1m-retinaface-t1/imgs' in self.hparams.train_data_path  :
             assert not self.hparams.train_data_subset
             class_num = 93431
-        elif self.hparams.train_data_path == 'WebFace4M':
+        elif 'WebFace4M' in self.hparams.train_data_path  :
             assert not self.hparams.train_data_subset
             class_num = 205990
         else:

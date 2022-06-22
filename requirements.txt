@@ -5,3 +5,6 @@ prettytable
 menpo
 mxnet
 opencv-python
+sklearn
+torchmetrics==0.6.0
+pandas

@@ -1,0 +1,23 @@
+dataset: MS1M-Arcface
+- train:
+
+- evaluation:
+
+# light/ ...
++ LFW: 13K imgs / 5K individuals
++ YTF: Youtube Face
+
+#cross pose LFW
++ CPLFW
+#cross ages LFW
++ CALFW
+
+#Age differences
+AgeDB
+
+#Frontal-Profile 
++ CFP
+
++ MegaFace: 1M imgs / 690K individuals
++ IJB-B: 21.8K imgs +55K video frames / 1.845 individuals
++ IJB-C (developed from IJB-B): 31.3K imgs +117.5K video frames / 3.531 individuals
