@@ -48,7 +48,6 @@ def save_rec_to_img_dir(rec_path, save_correct_channel_order=False, save_as_png=
             img.save(img_save_path, quality=95)
 
 def load_bin(path, rootdir, image_size=[112,112]):
-
     test_transform = trans.Compose([
                 trans.ToTensor(),
                 trans.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
@@ -78,12 +77,13 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     rec_path = Path(args.rec_path)
-    save_rec_to_img_dir(rec_path)
+    # save_rec_to_img_dir(rec_path)
     
     # bin_files = ['agedb_30', 'cfp_fp', 'lfw', 'calfw', 'cfp_ff', 'cplfw', 'vgg2_fp']
+    # bin_files = ['calfw', 'vgg2_fp', 'cfp_ff']
     bin_files = list(filter(lambda x: os.path.splitext(x)[1] in ['.bin'], os.listdir(args.rec_path)))
     bin_files = [i.split('.')[0] for i in bin_files]
-    
+    # import pdb; pdb.set_trace()
     for i in range(len(bin_files)):
-        load_bin(rec_path/(bin_files[i]+'.bin'), rec_path/bin_files[i])
+        load_bin(rec_path/(bin_files[i]+'.bin'), Path("/home/thucth/thucth/data/face-regconition/faces_emore/" + bin_files[i]))
 
