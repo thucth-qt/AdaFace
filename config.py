@@ -11,7 +11,7 @@ def get_args():
     parent_parser.add_argument('--val_data_path', type=str, default='faces_emore')
     parent_parser.add_argument('--train_data_subset', action='store_true')
     parent_parser.add_argument('--prefix', type=str, default='default')
-    parent_parser.add_argument('--gpus', type=int, default=1, help='how many gpus')
+    parent_parser.add_argument('--gpus', nargs="+", default=[0], type=int, help='how many gpus')
     parent_parser.add_argument('--distributed_backend', type=str, default='ddp', choices=('dp', 'ddp', 'ddp2'),)
     parent_parser.add_argument('--use_16bit', action='store_true', help='if true uses 16 bit precision')
     parent_parser.add_argument('--epochs', default=24, type=int, metavar='N', help='number of total epochs to run')
@@ -35,6 +35,7 @@ def get_args():
     args = parser.parse_args()
 
     args.lr_milestones = [int(x) for x in args.lr_milestones.split(',')]
+    args.gpus = [int(x) for x in args.gpus]
 
     # set working dir
     current_time = strftime("%m-%d_0", gmtime())

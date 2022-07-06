@@ -3,12 +3,12 @@ import argparse
 import matplotlib
 matplotlib.use('Agg')
 import sys, os
-sys.path.insert(0, os.path.dirname(os.getcwd()))
+sys.path.append("/home/thucth/thucth/project/AdaFace")
 import net
 
-from validation.insightface_ijb_helper.dataloader import prepare_dataloader
-from validation.insightface_ijb_helper import eval_helper_identification
-from validation.insightface_ijb_helper import eval_helper as eval_helper_verification
+from validation_mixed.insightface_ijb_helper.dataloader import prepare_dataloader
+from validation_mixed.insightface_ijb_helper import eval_helper_identification
+from validation_mixed.insightface_ijb_helper import eval_helper as eval_helper_verification
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -248,6 +248,8 @@ if __name__ == '__main__':
         'ir101_ms1mv3': ["../pretrained/adaface_ir101_ms1mv3.ckpt", 'ir_101'],
         'ir101_webface4m': ["../pretrained/adaface_ir101_webface4m.ckpt", 'ir_101'],
         'ir101_webface12m': ["../pretrained/adaface_ir101_webface12m.ckpt", 'ir_101'],
+        'ir101_ms1mv2_thucth': ["experiments/run_ir101_ms1mv2_full_finetune_06-27_0/epoch=25-step=1084483.ckpt", 'ir_101'],
+
     }
     assert args.model_name in adaface_models
     save_path = './result/{}/{}'.format(args.dataset_name, args.model_name)
@@ -259,8 +261,8 @@ if __name__ == '__main__':
     model.to('cuda:{}'.format(args.gpu))
 
     # get features and fuse
-    img_root = os.path.join(args.data_root, './%s/loose_crop' % dataset_name)
-    landmark_list_path = os.path.join(args.data_root, './%s/meta/%s_name_5pts_score.txt' % (dataset_name, dataset_name.lower()))
+    img_root = os.path.join(args.data_root, '%s/loose_crop' % dataset_name)
+    landmark_list_path = os.path.join(args.data_root, '%s/meta/%s_name_5pts_score.txt' % (dataset_name, dataset_name.lower()))
     img_input_feats, faceness_scores, norms = infer_images(model=model,
                                                            img_root=img_root,
                                                            landmark_list_path=landmark_list_path,

@@ -21,3 +21,71 @@ AgeDB
 + MegaFace: 1M imgs / 690K individuals
 + IJB-B: 21.8K imgs +55K video frames / 1.845 individuals
 + IJB-C (developed from IJB-B): 31.3K imgs +117.5K video frames / 3.531 individuals
+
+
+## Training 
+training model (resnet100) on a subset of MS1MV2 dataset to compare paper and arcface
+
+python main.py \
+    --data_root /home/thucth/thucth/data/face-regconition \
+    --arch ir_101 \
+    --start_from_model_statedict experiments/run_ir101_ms1mv2_full_finetune_06-27_0/epoch=5-step=174683.ckpt \
+    --train_data_path faces_emore/imgs \
+    --val_data_path faces_emore \
+    --prefix run_ir101_ms1mv2_full_finetune \
+    --gpus 4 \
+    --lr 0.01 \
+    --use_16bit \
+    --batch_size 200 \
+    --num_workers 8 \
+    --epochs 50 \
+    --lr_milestones 12,20,24 \
+    --head adaface \
+    --m 0.4 \
+    --h 0.333 \
+    --low_res_augmentation_prob 0.2 \
+    --crop_augmentation_prob 0.2 \
+    --photometric_augmentation_prob 0.2
+
+python main.py \
+    --data_root /home/thucth/thucth/data/face-regconition \
+    --arch ir_101 \
+    --start_from_model_statedict experiments/run_ir101_ms1mv2_full_finetune_06-27_0/epoch=5-step=174683.ckpt \
+    --resume_from_checkpoint experiments/run_ir101_ms1mv2_full_finetune_06-27_0/epoch=5-step=174683.ckpt \
+    --train_data_path faces_emore/imgs \
+    --val_data_path faces_emore \
+    --prefix run_ir101_ms1mv2_full_finetune_draft \
+    --gpus 4 \
+    --lr 0.01 \
+    --use_16bit \
+    --batch_size 128 \
+    --num_workers 8 \
+    --epochs 50 \
+    --lr_milestones 12,20,24 \
+    --head adaface \
+    --m 0.4 \
+    --h 0.333 \
+    --low_res_augmentation_prob 0.2 \
+    --crop_augmentation_prob 0.2 \
+    --photometric_augmentation_prob 0.2
+
+## WebFace
+python main.py \
+    --data_root /share/team/thucth/data/FaceReg \
+    --arch ir_101 \
+    --train_data_path faces_emore/webface42m \
+    --val_data_path faces_emore \
+    --prefix run_ir101_webface42m \
+    --gpus 0 2 3 \
+    --lr 0.1 \
+    --use_16bit \
+    --batch_size 12 \
+    --num_workers 16 \
+    --epochs 24 \
+    --lr_milestones 10,18,22 \
+    --head adaface \
+    --m 0.4 \
+    --h 0.333 \
+    --low_res_augmentation_prob 0.2 \
+    --crop_augmentation_prob 0.2 \
+    --photometric_augmentation_prob 0.2 >>log.txt

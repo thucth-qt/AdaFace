@@ -22,9 +22,9 @@ class Trainer(LightningModule):
         elif 'ms1m-retinaface-t1/imgs' in self.hparams.train_data_path  :
             assert not self.hparams.train_data_subset
             class_num = 93431
-        elif 'WebFace4M' in self.hparams.train_data_path  :
+        elif 'faces_emore/webface42m' in self.hparams.train_data_path:
             assert not self.hparams.train_data_subset
-            class_num = 205990
+            class_num = 2059906
         else:
             raise ValueError('Check your train_data_path', self.hparams.train_data_path)
 

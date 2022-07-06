@@ -6,7 +6,8 @@ import numpy as np
 
 
 adaface_models = {
-    'ir_50':"pretrained/adaface_ir50_ms1mv2.ckpt",
+    'ir_50': "pretrained/adaface_ir50_ms1mv2.ckpt",
+    'ir_101': "experiments/run_ir101_ms1mv2_full_finetune_06-27_0/epoch=25-step=1084483.ckpt",
 }
 
 def load_pretrained_model(architecture='ir_50'):
@@ -27,7 +28,7 @@ def to_input(pil_rgb_image):
 
 if __name__ == '__main__':
 
-    model = load_pretrained_model('ir_50')
+    model = load_pretrained_model('ir_101')
     feature, norm = model(torch.randn(2,3,112,112))
 
     test_image_path = 'face_alignment/test_images'
